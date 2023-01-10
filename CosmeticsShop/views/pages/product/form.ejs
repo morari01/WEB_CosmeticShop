@@ -1,0 +1,69 @@
+<%- include('../../fragments/header.ejs') %>
+
+<main>
+    <script type="application/javascript" src="/js/validationProductForm.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+
+    <h2><%=pageTitle%></h2>
+
+    <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+
+        <input type="hidden" name="id_produkt" value="<%=product.id_produkt%>">
+
+        <label for="name">Nazwa: <span class="symbol-required">*</span> </label>
+        <input type="text" name="Nazwa" id="name" placeholder="np.Nivea" required value="<%=product.Nazwa%>"
+                <%=(formMode == 'showDetails') ? 'disabled' : '' %>>
+        <span id="errorName" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Nazwa'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Nazwa')).message %>
+            <% } %>
+        </span>
+
+        <label for="productType">Typ produktu:<span class="symbol-required">*</span> </label>
+        <input type="text" name="Typ_produktu" id="productType" placeholder="np.Zel do mycia" required value="<%=product.Typ_produktu%>"
+                <%= (formMode == 'showDetails') ? 'disabled' : ''%>>
+        <span id="errorProductType" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Typ_produktu'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Typ_produktu')).message %>
+            <% } %>
+        </span>
+
+        <label for="capacity">Pojemność:<span class="symbol-required">*</span></label>
+        <input type="number" name="Pojemnosc" id="capacity" placeholder="np.50ml" required value="<%=product.Pojemnosc%>"
+                <%= (formMode == 'showDetails') ? 'disabled' : ''%>>
+        <span id="errorCapacity" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Pojemnosc'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Pojemnosc')).message %>
+            <% } %>
+        </span>
+
+        <label for="price">Cena:<span class="symbol-required">*</span></label>
+        <input type="text" name="Cena" id="price" placeholder="np. 25zl" required value="<%=product.Cena%>"
+                <%= (formMode == 'showDetails') ? 'disabled' : ''%>>
+        <span id="errorPrice" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Cena'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Cena')).message %>
+            <% } %>
+        </span>
+
+        <label for="description">Opis: </label>
+        <input type="text" name="Opis" id="description" value="<%=product.Opis%>"
+                <%= (formMode == 'showDetails') ? 'disabled' : ''%>>
+        <span id="errorDescription" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Opis'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Opis')).message %>
+            <% } %>
+        </span>
+
+        <p id="errorsSummary" class="<%= validationErrors.length > 0 ?'errors-text' : ''%>">
+            <%= validationErrors.length > 0 ?'Formularz zawiera błędy' : ''%>
+        </p>
+
+        <div class="form-buttons">
+            <input class="form-button-submit" type="submit" value="<%=btnLabel%>">
+            <a href="/products" class="form-button-cancel">Anuluj</a>
+        </div>
+    </form>
+</main>
+
+<%- include('../../fragments/footer.ejs') %>

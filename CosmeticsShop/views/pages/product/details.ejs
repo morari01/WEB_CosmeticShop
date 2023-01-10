@@ -1,0 +1,68 @@
+<%- include('../../fragments/header.ejs') %>
+
+<main>
+    <script type="application/javascript" src="/js/validationProductForm.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+
+    <h2><%=pageTitle%></h2>
+    <form class="form">
+
+        <label for="name">Nazwa:<span class="symbol-required">*</span> </label>
+        <input type="text" name="Nazwa" id="name" required value="<%=product.Nazwa%>">
+        <span id="errorName"></span>
+
+        <label for="productType">Typ produktu:<span class="symbol-required">*</span> </label>
+        <input type="text" name="Typ_produktu" id="productType" required value="<%=product.Typ_produktu%>">
+        <span id="errorProductType"></span>
+
+        <label for="capacity">Pojemność:<span class="symbol-required">*</span></label>
+        <input type="number" name="Pojemnosc" id="capacity" required value="<%=product.Pojemnosc%>">
+        <span id="errorCapacity"></span>
+
+        <label for="price">Cena:<span class="symbol-required">*</span></label>
+        <input type="text" name="Cena" id="price" required value="<%=product.Cena%>">
+        <span id="errorPrice"></span>
+
+        <label for="description">Opis: </label>
+        <input type="text" name="Opis" id="description" value="<%=product.Opis%>">
+        <span id="errorDescription"></span>
+
+        <div class="form-buttons">
+            <p id="errorsSummary" class="errors-text"></p>
+            <%if(formMode !='showDetails') { %>
+            <input class="form-button-submit" type="submit" value="<%=btnLabel%>" >
+            <a href="/products" class="list-actions-button-edit">Edytuj</a>
+            <% } else { %>
+                <a href="/products" class="list-actions-button-edit">Powrot</a>
+            <% } %>
+        </div>
+    </form>
+
+    <h2>Szczegóły zamowienia</h2>
+
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Nazwa producentu</th>
+            <th>Ilosc</th>
+            <th>Data dostawy</th>
+            <th>Komentarz</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <%if(product.orders != null){  %>
+        <% for(let e of product.orders) { %>
+        <tr>
+            <td><a href="/producers/details/<%=e.producer.id_producent%>"><%=e.producer.Nazwa_firmy%></a></td>
+            <td><%=e.Ilosc%></td>
+            <td><%=e.Data_dostawy.toISOString().split('T')[0]%></td>
+            <td><%=e.Komentarz%></td>
+        </tr>
+        <% } %>
+        <%}%>
+        </tbody>
+    </table>
+</main>
+
+<%- include('../../fragments/footer.ejs') %>

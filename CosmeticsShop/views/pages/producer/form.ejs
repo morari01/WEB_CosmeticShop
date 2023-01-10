@@ -1,0 +1,67 @@
+<%- include('../../fragments/header.ejs') %>
+
+<main>
+    <script type="application/javascript" src="/js/validationProducerForm.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <h2><%=pageTitle%></h2>
+
+    <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+
+        <input type="hidden" name="id_producent" value="<%=producer.id_producent%>">
+
+        <label for="name">Nazwa firmy: <span class="symbol-required">*</span></label>
+        <input type="text" name="Nazwa_firmy" id="name" placeholder="2-60 znaków" required value="<%=producer.Nazwa_firmy%>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>>
+        <span id="errorName"  class="errors-text">
+            <%if(validationErrors.find(e=>e.path.includes('Nazwa_firmy'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Nazwa_firmy')).message %>
+            <% } %>
+        </span>
+
+        <label for="country">Panstwo:<span class="symbol-required">*</span> </label>
+        <input type="text" name="Panstwo" id="country" placeholder="2-60 znaków" required value="<%=producer.Panstwo%>"
+                <%= (formMode == 'showDetails') ? 'disabled' : ''%>>
+        <span id="errorCountry"  class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Panstwo'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Panstwo')).message %>
+            <% } %>
+        </span>
+
+        <label for="city">Miasto:<span class="symbol-required">*</span> </label>
+        <input type="text" name="Miasto" id="city" placeholder="2-60 znaków" required value="<%=producer.Miasto%>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>>
+        <span id="errorCity"  class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Miasto'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Miasto')).message %>
+            <% } %>
+        </span>
+
+        <label for="phone">Telefon:<span class="symbol-required">*</span> </label>
+        <input type="tel" name="Telefon" id="phone" placeholder="+48010010010" required value="<%=producer.Telefon%>"
+                <%= (formMode == 'showDetails') ? 'disabled' : ''%>>
+        <span id="errorPhone" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Telefon'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Telefon')).message %>
+            <% } %>
+        </span>
+
+        <label for="email">Email:</label>
+        <input type="email" name="Email" id="email" placeholder="np. nazwa@gmail.com" value="<%=producer.Email%>"
+                <%= (formMode == 'showDetails') ? 'disabled' : ''%>>
+        <span id="errorEmail" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Email'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Email')).message %>
+            <% } %>
+        </span>
+
+        <p id="errorsSummary" class="<%= validationErrors.length > 0 ?'errors-text' : ''%>">
+            <%= validationErrors.length > 0 ?'Formularz zawiera błędy' : ''%>
+        </p>
+
+        <div class="form-buttons">
+            <input class="form-button-submit" type="submit" value="<%=btnLabel%>">
+            <a href="/producers" class="form-button-cancel">Anuluj</a>
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>

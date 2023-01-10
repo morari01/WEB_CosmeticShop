@@ -1,0 +1,42 @@
+<%- include('../../fragments/header.ejs') %>
+
+<main>
+    <script type="application/javascript" src="/js/validationProductForm.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <h2>Lista produktow</h2>
+
+<table class="table-list">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Typ produktu</th>
+            <th>Pojemność</th>
+            <th>Cena</th>
+            <th>Opis</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <% for (let product of products) { %>
+        <tr>
+            <td><%= product.Nazwa %></td>
+            <td><%= product.Typ_produktu %></td>
+            <td><%= product.Pojemnosc %></td>
+            <td><%= product.Cena %></td>
+            <td><%= product.Opis %></td>
+            <td>
+                <ul class="list-actions">
+                    <li><a href="/products/details/<%=product.id_produkt%>" class="list-actions-button-details">Szczegóły</a></li>
+                    <li><a href="/products/edit/<%=product.id_produkt%>" class="list-actions-button-edit">Edytuj</a></li>
+                    <li><a href="/products/delete/<%=product.id_produkt%>" class="list-actions-button-delete">Usuń</a></li>
+                </ul>
+            </td>
+        </tr>
+     <% } %>
+    </tbody>
+</table>
+    <p><a href="/products/add" class="button-add">Dodaj nowy produkt</a></p>
+</main>
+
+<%- include('../../fragments/footer.ejs') %>

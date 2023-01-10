@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <meta charset="UTF-8">
+    <title>Sklep</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<header>
+    <h1 >Luna Cosmetics</h1>
+    <img src="/img/logo.png" alt="Logo" width="200" height="200">
+</header>
+
+<nav>
+    <ul>
+        <li><a href="/" class="<%= navLocation == 'main'?'active' : ''%>">Strona główna</a></li>
+        <li><a href="/products" class="<%= navLocation == 'product'?'active' : ''%>" >Produkty</a></li>
+        <li><a href="/producers" class="<%= navLocation == 'producer'?'active' : ''%>">Producenty</a></li>
+        <li><a href="/orders" class="<%= navLocation == 'order'?'active' : ''%>">Zamówienia</a></li>
+    </ul>
+</nav>

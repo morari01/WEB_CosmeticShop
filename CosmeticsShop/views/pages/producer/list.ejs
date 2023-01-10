@@ -1,0 +1,42 @@
+<%- include('../../fragments/header.ejs') %>
+
+<main>
+    <script type="application/javascript" src="/js/validationProducerForm.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <h2>Lista producentow</h2>
+
+<table class="table-list">
+    <thead>
+        <tr>
+            <th>Nazwa_firmy</th>
+            <th>Panstwo</th>
+            <th>Miasto</th>
+            <th>Telefon</th>
+            <th>Email</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <% for (let producer of producers) { %>
+        <tr>
+            <td><%= producer.Nazwa_firmy %></td>
+            <td><%= producer.Panstwo %></td>
+            <td><%= producer.Miasto %></td>
+            <td><%= producer.Telefon %></td>
+            <td><%= producer.Email%></td>
+            <td>
+                <ul class="list-actions">
+                    <li><a href="/producers/details/<%=producer.id_producent%>" class="list-actions-button-details">Szczegoly</a></li>
+                    <li><a href="/producers/edit/<%=producer.id_producent%>" class="list-actions-button-edit">Edytuj</a></li>
+                    <li><a href="/producers/delete/<%=producer.id_producent%>" class="list-actions-button-delete">Usuń</a></li>
+                </ul>
+            </td>
+        </tr>
+    <% } %>
+    </tbody>
+</table>
+<p><a href="/producers/add" class="button-add">Dodaj nowego producenta</a></p>
+</main>
+
+<%- include('../../fragments/footer.ejs') %>

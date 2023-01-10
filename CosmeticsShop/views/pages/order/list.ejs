@@ -1,0 +1,42 @@
+<%- include('../../fragments/header.ejs') %>
+
+<main>
+    <script type="application/javascript" src="/js/validationOrderForm.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <h2>Lista zamowien</h2>
+
+<table class="table-list">
+    <thead>
+        <tr>
+            <th>Nazwa Produktu</th>
+            <th>Nazwa Producenta</th>
+            <th>Ilosc</th>
+            <th>Data dostawy</th>
+            <th>Komentarz</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <% for (let order of orders) { %>
+        <tr>
+            <td><%= order.product.Nazwa %></td>
+            <td><%= order.producer.Nazwa_firmy%></td>
+            <td><%= order.Ilosc%></td>
+            <td><%= order.Data_dostawy.toISOString().split('T')[0] %></td>
+            <td><%= order.Komentarz %></td>
+            <td>
+                <ul class="list-actions">
+                    <li><a href="/orders/details/<%=order.id%>" class="list-actions-button-details">Szczegoly</a></li>
+                    <li><a href="/orders/edit/<%=order.id%>" class="list-actions-button-edit">Edytuj</a></li>
+                    <li><a href="/orders/delete/<%=order.id%>" class="list-actions-button-delete">Usuń</a></li>
+                </ul>
+            </td>
+        </tr>
+    <% } %>
+    </tbody>
+</table>
+    <p><a href="/orders/add" class="button-add">Dodaj nowe zamówenie</a></p>
+</main>
+
+<%- include('../../fragments/footer.ejs') %>

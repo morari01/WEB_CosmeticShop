@@ -1,0 +1,81 @@
+<%- include('../../fragments/header.ejs') %>
+
+<main>
+    <script type="application/javascript" src="/js/validationOrderForm.js"></script>
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+
+    <h2><%=pageTitle%></h2>
+
+    <form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+
+        <input type="hidden" name="id" value="<%=order.id%>">
+
+        <label for="productName">Nazwa produktu:<span class="symbol-required">*</span> </label>
+        <select id="productName" name="id_produkt" required <%=(formMode=='showDetails')?'disabled' : ' '%>>
+            <option value="-1">--Wybierz--</option>
+            <%for (let i=0; i<allProducts.length; i++){ let prod = allProducts[i]; %>
+            <option value="<%=prod.id_produkt%>" label="<%=prod.Nazwa%>"
+                    <%=(prod.id_produkt.toString() == order.id_produkt) ? 'selected' : ''%>>
+            </option>
+            <%}%>
+        </select>
+        <span id="errorProductName" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('id_produkt'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('id_produkt')).message %>
+            <% } %>
+        </span>
+
+        <label for="producerName">Nazwa producentu:<span class="symbol-required">*</span> </label>
+        <select id="producerName" name="id_producent" required <%=(formMode=='showDetails')?'disabled' : ' '%>>
+            <option value="-1">--Wybierz--</option>
+            <%for (let i=0; i<AllProducers.length; i++) { let prod = AllProducers[i];%>
+            <option value="<%=prod.id_producent%>" label="<%=prod.Nazwa_firmy%>"
+                    <%=(prod.id_producent.toString() == order.id_producent) ? 'selected' : ''%>>
+            </option>
+            <%}%>
+        </select>
+        <span id="errorProducerName" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('id_producent'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('id_producent')).message %>
+            <% } %>
+        </span>
+
+        <label for="quantity">Ilosc:<span class="symbol-required">*</span> </label>
+        <input type="number" name="Ilosc" id="quantity"  min="1" max="1000" required value="<%=order.Ilosc%>"
+                <%=(formMode == 'showDetails') ? 'disabled' : ''%> >
+        <span id="errorQuantity" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Ilosc'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Ilosc')).message %>
+            <% } %>
+        </span>
+
+        <label for="dateShipping">Data dostawy:<span class="symbol-required">*</span> </label>
+        <%if(formMode == 'createNew' ) {%>
+        <input type="date" name="Data_dostawy" id="dateShipping" required value="<%=order.Data_dostawy%>"
+                <%=(formMode == 'showDetails') ? 'disabled' : ''%> >
+        <%} else {%>
+        <input type="date" name="Data_dostawy" id="dateShipping" required value="<%=order.Data_dostawy.toISOString().split('T')[0]%>">
+        <%}%>
+        <span id="errorDateShipping" class="errors-text">
+            <% if(validationErrors.find(e=>e.path.includes('Data_dostawy'))) { %>
+            <%=validationErrors.find(e=>e.path.includes('Data_dostawy')).message %>
+            <% } %>
+        </span>
+
+        <label for="comment">Komentarz</label>
+        <input type="text" name="Komentarz" id="comment" value="<%=order.Komentarz%>"
+                <%=(formMode == 'showDetails') ? 'disabled' : ''%> >
+        <span id="errorComment"></span>
+
+        <p id="errorsSummary" class="<%= validationErrors.length > 0 ?'errors-text' : ''%>">
+            <%= validationErrors.length > 0 ?'Formularz zawiera błędy' : ''%>
+        </p>
+
+        <div class="form-buttons">
+            <input class="form-button-submit" type="submit" value="<%=btnLabel%>">
+            <a href="/orders" class="form-button-cancel">Anuluj</a>
+        </div>
+    </form>
+</main>
+
+<%- include('../../fragments/footer.ejs') %>
